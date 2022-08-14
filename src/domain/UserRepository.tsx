@@ -1,6 +1,8 @@
 // This repository interface defines syntactical contract that a repository implementation should confirm to.
-export interface DataRepository {
+import {User} from "../model/User";
 
-    getData: () => number
+export interface UserRepository {
+
+    getUser: () => User
 
 }

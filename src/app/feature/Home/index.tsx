@@ -1,9 +1,13 @@
 import {Button, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useState} from "react";
+import {Presenter} from "./presenter";
 
 const HomeScreen = ({navigation}) => {
-    const [userName, setUserName] = useState('Jakub');
+    // Init presenter
+    const presenter = new Presenter()
+    // Init state
+    const [userName, setUserName] = useState(presenter);
 
     return (
         <View>
@@ -11,7 +15,7 @@ const HomeScreen = ({navigation}) => {
             <StatusBar style="auto"/>
             <Button
                 title="Go to the Profile screen"
-                onPress={() => navigation.navigate('Profile', {userName: userName})}
+                onPress={() => navigation.navigate('Profile', {userName: presenter.user.name, userAge: presenter.user.age })}
             />
         </View>
     );

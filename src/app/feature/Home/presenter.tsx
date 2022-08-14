@@ -1,16 +1,16 @@
-import {GetDataUseCase} from "../../../domain/GetDataUseCase";
-import {DataRepositoryImpl} from "../../../data/DataRepositoryImpl";
+import {GetUserUseCase} from "../../../domain/GetUserUseCase";
+import {UserRepositoryImpl} from "../../../data/UserRepositoryImpl";
+import {User} from "../../../model/User";
 
 export class Presenter {
 
-    private useCase: GetDataUseCase;
+    user: User
 
     constructor(
-        useCase: GetDataUseCase = new GetDataUseCase(new DataRepositoryImpl()) // FIXME - replace this by DI implementation
+        useCase: GetUserUseCase = new GetUserUseCase(new UserRepositoryImpl()) // FIXME - replace this by DI implementation
     ) {
-        this.useCase = useCase
+        this.user = useCase.invoke();
     }
 
-    // TODO - continue in implementation of presenter
-
+    // FIXME - needs to implement observable ViewState
 }
