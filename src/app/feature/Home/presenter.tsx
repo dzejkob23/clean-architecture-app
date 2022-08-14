@@ -1,4 +1,4 @@
-import {GetUserUseCase} from "../../../domain/GetUserUseCase";
+import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
 import {UserRepositoryImpl} from "../../../data/UserRepositoryImpl";
 import {User} from "../../../model/User";
 
