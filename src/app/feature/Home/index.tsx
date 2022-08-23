@@ -1,13 +1,12 @@
 import {Button, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useState} from "react";
-import {Presenter} from "./presenter";
+import {GetUserUseCase} from "../../../domain/GetUserUseCase";
 
 const HomeScreen = ({navigation}) => {
-    // Init presenter
-    const presenter = new Presenter()
+
     // Init state
-    const [userName, setUserName] = useState(presenter);
+    const [user, setUser] = useState(GetUserUseCase());
 
     return (
         <View>
@@ -15,7 +14,7 @@ const HomeScreen = ({navigation}) => {
             <StatusBar style="auto"/>
             <Button
                 title="Go to the Profile screen"
-                onPress={() => navigation.navigate('Profile', {userName: presenter.user.name, userAge: presenter.user.age })}
+                onPress={() => navigation.navigate('Profile', {userName: user.name, userAge: user.age})}
             />
         </View>
     );
