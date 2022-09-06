@@ -1,31 +1,29 @@
 import {Button, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
-import {useState} from "react";
-import {GetUserUseCase, LoadFreshUserUseCase, ObserveUserUseCase} from "../../../domain/UserUseCase";
+import {UserProvider} from "../../../sources/provider/UserProvider";
+import UserCredentials from "../../components/UserCredentials";
+import {loadUserData} from "../../../data/UserRepository";
 
 const HomeScreen = ({navigation}) => {
 
-    // Init state
-    const [simpleUser] = useState(GetUserUseCase());
-    const { user: [user, setUser]} = ObserveUserUseCase()
-
     return (
-        <View>
-            <StatusBar style="auto"/>
-            <Text>Hello Home!</Text>
-            <Text/>
-            <Text>Simple user: {simpleUser.name} {simpleUser.age}</Text>
-            <Text>Observable user: {user.name} {user.age}</Text>
-            <Text/>
-            <Button
-                title="Load fresh user data"
-                onPress={() => { LoadFreshUserUseCase() }}
-            />
-            <Button
-                title="Go to the Profile screen"
-                onPress={() => navigation.navigate('Profile', {userName: simpleUser.name, userAge: simpleUser.age})}
-            />
-        </View>
+        <UserProvider>
+            <View>
+                <StatusBar style="auto"/>
+                <Text>Hello Home!</Text>
+                <Text/>
+                <UserCredentials/>
+                <Text/>
+                <Button
+                    title="Load fresh user data"
+                    onPress={loadUserData}
+                />
+                {/*<Button*/}
+                {/*    title="Go to the Profile screen"*/}
+                {/*    onPress={() => navigation.navigate('Profile', {userName: user.name, userAge: user.age})}*/}
+                {/*/>*/}
+            </View>
+        </UserProvider>
     );
 }
 
