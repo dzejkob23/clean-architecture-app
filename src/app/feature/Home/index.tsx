@@ -6,8 +6,8 @@ import {GetUserUseCase, LoadFreshUserUseCase, ObserveUserUseCase} from "../../..
 const HomeScreen = ({navigation}) => {
 
     // Init state
-    const [simpleUser, setSimpleUser] = useState(GetUserUseCase());
-    const observedUser = ObserveUserUseCase().user != undefined ? this : simpleUser
+    const [simpleUser] = useState(GetUserUseCase());
+    const { user: [user, setUser]} = ObserveUserUseCase()
 
     return (
         <View>
@@ -15,7 +15,7 @@ const HomeScreen = ({navigation}) => {
             <Text>Hello Home!</Text>
             <Text/>
             <Text>Simple user: {simpleUser.name} {simpleUser.age}</Text>
-            <Text>Observable user: {observedUser.name} {observedUser.age}</Text>
+            <Text>Observable user: {user.name} {user.age}</Text>
             <Text/>
             <Button
                 title="Load fresh user data"
