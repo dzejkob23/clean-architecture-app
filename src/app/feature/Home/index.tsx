@@ -2,11 +2,12 @@ import {Button, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {HomePresenter} from "./homePresenter";
 import {container} from "tsyringe";
+import {useState} from "react";
 
 const HomeScreen = ({navigation}) => {
     // Init presenter
-    const presenter = container.resolve(HomePresenter)
-
+    const [presenter] = useState(container.resolve(HomePresenter))
+    // Define UI
     return (
         <View>
             <Text>Hello Home!</Text>
