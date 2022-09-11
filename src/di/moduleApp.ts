@@ -2,9 +2,9 @@ import {container} from "tsyringe";
 import {HomePresenter} from "../app/feature/Home/homePresenter";
 
 /**
- * Registers all presenters.
+ * Registers app layer injectable objects.
  */
-export function initPresenter() {
+export function initModuleApp() {
 
     container.register(HomePresenter, {useClass: HomePresenter})
 

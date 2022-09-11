@@ -3,14 +3,17 @@ import {UserRepository} from "../repository/UserRepository";
 import {User} from "../../../../model/User";
 import {autoInjectable, inject} from "tsyringe";
 
+/**
+ * Returns user data. UseCase does not care where the data is from.
+ * It simply calls a repository interface only.
+ */
 @autoInjectable()
 export class GetUserUseCase extends UseCaseNoParams<User> {
 
     constructor(
         @inject("UserRepository") private userRepository?: UserRepository
     ) {
-        super();
-        this.userRepository = userRepository
+        super()
     }
 
     doWork(params: void): User {

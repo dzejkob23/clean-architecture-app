@@ -1,11 +1,12 @@
 import {container, Lifecycle} from "tsyringe";
-import {UserRepositoryImpl} from "../data/UserRepositoryImpl";
+import {UserRepositoryImpl} from "../data/feature/user/repository/UserRepositoryImpl";
 
 /**
- * Registers all repositories.
+ * Registers data layer injectable objects.
  */
-export function initRepository() {
+export function initModuleData() {
 
+    // Repositories
     container.register("UserRepository",
         {useClass: UserRepositoryImpl},
         {lifecycle: Lifecycle.Singleton}

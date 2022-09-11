@@ -1,13 +1,14 @@
-import {initPresenter} from "./presenter";
-import {initUseCase} from "./useCase";
-import {initRepository} from "./repository";
+import {initModuleApp} from "./moduleApp";
+import {initModuleDomain} from "./moduleDomain";
+import {initModuleData} from "./moduleData";
 
 /**
- * Registers all injectable classes. This needs to be called as a first thing
- * before the app starts. The file that calls this method also needs to import \"reflect-metadata\".
+ * Contains registration of injectable objects cross all layers.
+ * This needs to be called as a first thing before the app starts.
+ * The file that calls this method also needs to import \"reflect-metadata\".
  */
 export function initDi() {
-    initPresenter()
-    initUseCase()
-    initRepository()
+    initModuleApp()
+    initModuleDomain()
+    initModuleData()
 }
