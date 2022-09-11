@@ -1,13 +1,13 @@
 import {UseCaseNoParams} from "../../../core/UseCaseNoParams";
 import {UserRepository} from "../repository/UserRepository";
 import {User} from "../../../../model/User";
+import {autoInjectable, inject} from "tsyringe";
 
+@autoInjectable()
 export class GetUserUseCase extends UseCaseNoParams<User> {
 
-    private userRepository: UserRepository;
-
     constructor(
-        userRepository: UserRepository
+        @inject("UserRepository") private userRepository?: UserRepository
     ) {
         super();
         this.userRepository = userRepository

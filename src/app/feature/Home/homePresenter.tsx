@@ -1,13 +1,14 @@
 import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
-import {UserRepositoryImpl} from "../../../data/UserRepositoryImpl";
 import {User} from "../../../model/User";
+import {autoInjectable, inject} from "tsyringe";
 
-export class Presenter {
+@autoInjectable()
+export class HomePresenter {
 
     user: User
 
     constructor(
-        useCase: GetUserUseCase = new GetUserUseCase(new UserRepositoryImpl()) // FIXME - replace this by DI implementation
+        @inject(GetUserUseCase) private useCase?: GetUserUseCase
     ) {
         this.user = useCase.invoke();
     }
