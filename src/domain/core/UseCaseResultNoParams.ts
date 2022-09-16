@@ -8,7 +8,7 @@ import {Result} from "../../model/Result";
  */
 export abstract class UseCaseResultNoParams<OutputType extends any> extends UseCase<Result<OutputType>, void> {
 
-    invoke(): Result<OutputType> {
+    async invoke(): Promise<Result<OutputType>> {
         return super.invoke(undefined)
     }
 }

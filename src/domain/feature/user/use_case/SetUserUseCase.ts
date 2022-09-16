@@ -9,19 +9,18 @@ import {User} from "../../../../model/User";
 @autoInjectable()
 export class SetUserUseCase extends UseCase<void, SetUserUseCase.Params> {
 
-    constructor(
-        @inject("UserRepository") private userRepository?: UserRepository
-    ) {
+    constructor(@inject("UserRepository") private userRepository?: UserRepository) {
         super()
     }
 
-    doWork(params: SetUserUseCase.Params): void {
-        this.userRepository.setUser(params.user)
+    doWork(params: SetUserUseCase.Params): Promise<void> {
+        return this.userRepository.setUser(params.user)
     }
 }
 
 export namespace SetUserUseCase {
     export class Params {
-        constructor(public user: User) { }
+        constructor(public user: User) {
+        }
     }
 }

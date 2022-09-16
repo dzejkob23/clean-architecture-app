@@ -13,6 +13,10 @@ const HomeScreen = ({navigation}) => {
             <Text>Hello Home!</Text>
             <StatusBar style="auto"/>
             <Button
+                title="Change user data..."
+                onPress={ presenter.setUserData }
+            />
+            <Button
                 title="Go to the Profile screen"
                 onPress={() => navigation.navigate('Profile', {userName: presenter.user.name, userAge: presenter.user.age })}
             />

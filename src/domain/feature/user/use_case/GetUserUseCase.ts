@@ -10,13 +10,11 @@ import {autoInjectable, inject} from "tsyringe";
 @autoInjectable()
 export class GetUserUseCase extends UseCaseNoParams<User> {
 
-    constructor(
-        @inject("UserRepository") private userRepository?: UserRepository
-    ) {
+    constructor(@inject("UserRepository") private userRepository?: UserRepository) {
         super()
     }
 
-    doWork(params: void): User {
-        return this.userRepository.getUser();
+    doWork(params: void): Promise<User> {
+        return this.userRepository.getUser()
     }
 }

@@ -12,7 +12,7 @@ export abstract class UseCase<OutputType, Params> {
      * @return type [OutputType] of parameter. In the most common way the [OutputType] is wrapped to a special
      * use-case implementation
      */
-    invoke(params: Params): OutputType {
+    async invoke(params: Params): Promise<OutputType> {
         return this.doWork(params)
     }
 
@@ -23,6 +23,6 @@ export abstract class UseCase<OutputType, Params> {
      * @return type [OutputType] of parameter. In the most common way the [OutputType] is wrapped to a special
      * use-case implementation.
      */
-    abstract doWork(params: Params): OutputType
+    abstract doWork(params: Params): Promise<OutputType>
 
 }

@@ -9,12 +9,12 @@ export interface UserRepository {
     /**
      * Returns data about user.
      */
-    getUser: () => User
+    getUser: () => Promise<User>
 
     /**
      * Stores data about user.
      * @param user data about user
      */
-    setUser: (user: User) => void
+    setUser: (user: User) => Promise<void>
 
 }
