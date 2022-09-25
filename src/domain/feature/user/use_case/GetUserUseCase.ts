@@ -1,16 +1,16 @@
 import {UseCaseNoParams} from "../../../core/UseCaseNoParams";
 import {UserRepository} from "../repository/UserRepository";
 import {User} from "../../../../model/User";
-import {autoInjectable, inject} from "tsyringe";
+import {inject, injectable} from "tsyringe";
 
 /**
  * Returns user data. UseCase does not care where the data is from.
  * It simply calls a repository interface only.
  */
-@autoInjectable()
+@injectable()
 export class GetUserUseCase extends UseCaseNoParams<User> {
 
-    constructor(@inject("UserRepository") private userRepository?: UserRepository) {
+    constructor(@inject("UserRepository") private userRepository: UserRepository) {
         super()
     }
 

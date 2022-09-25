@@ -7,18 +7,27 @@ import {useState} from "react";
 const HomeScreen = ({navigation}) => {
     // Init presenter
     const [presenter] = useState(container.resolve(HomePresenter))
+    const [viewState] = useState(presenter.state)
     // Define UI
     return (
         <View>
-            <Text>Hello Home!</Text>
             <StatusBar style="auto"/>
+            <Text>Hello Home!</Text>
+            <Text>User: {viewState.user.name}</Text>
+            <Text>Loading: {viewState.loading}</Text>
+            <Text>Error: {viewState.errorMessage}</Text>
+            <Text/>
             <Button
                 title="Change user data..."
-                onPress={ presenter.setUserData }
+                onPress={presenter.setUserData}
             />
+            <Text/>
             <Button
                 title="Go to the Profile screen"
-                onPress={() => navigation.navigate('Profile', {userName: presenter.user.name, userAge: presenter.user.age })}
+                onPress={() => navigation.navigate('Profile', {
+                    userName: viewState.user.name,
+                    userAge: viewState.user.age
+                })}
             />
         </View>
     );

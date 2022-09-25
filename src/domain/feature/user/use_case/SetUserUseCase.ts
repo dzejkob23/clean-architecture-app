@@ -9,7 +9,7 @@ import {User} from "../../../../model/User";
 @autoInjectable()
 export class SetUserUseCase extends UseCase<void, SetUserUseCase.Params> {
 
-    constructor(@inject("UserRepository") private userRepository?: UserRepository) {
+    constructor(@inject("UserRepository") private userRepository: UserRepository) {
         super()
     }
 

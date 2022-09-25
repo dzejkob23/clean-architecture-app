@@ -6,7 +6,6 @@ import {UserRepositoryImpl} from "../data/feature/user/repository/UserRepository
  */
 export function initModuleData() {
 
-    // Repositories
     container.register("UserRepository",
         {useClass: UserRepositoryImpl},
         {lifecycle: Lifecycle.Singleton}
