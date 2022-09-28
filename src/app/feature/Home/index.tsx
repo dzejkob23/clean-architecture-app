@@ -27,12 +27,12 @@ const HomeScreen = ({navigation}) => {
             <Text>Error: {viewState.errorMessage}</Text>
             <Text/>
             <Button
-                title="Update user from presenter..."
+                title="Update from presenter..."
                 onPress={() => presenter.updateUserFromPresenter("Karel IV.", 706)}
             />
             <Text/>
             <Button
-                title="Update user from storage..."
+                title="Update from storage..."
                 onPress={() => presenter.loadDataFromStorage()}
             />
             <Text/>
