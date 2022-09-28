@@ -1,14 +1,36 @@
 import {User} from "../../../model/User";
-import {autoInjectable} from "tsyringe";
+import {autoInjectable, inject} from "tsyringe";
 import {ViewState} from "../../core/ViewState";
 import {BasePresenter} from "../../core/BasePresenter";
+import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
+import {SetUserUseCase} from "../../../domain/feature/user/use_case/SetUserUseCase";
 
 @autoInjectable()
 export class HomePresenter extends BasePresenter<HomeState> {
 
-    // constructor() {
-    //     super();
-    // }
+    constructor(
+        @inject(GetUserUseCase) private getUserUseCase: GetUserUseCase,
+        @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
+    ) {
+        super()
+        getUserUseCase.invoke().then(
+            (user: User) => {
+                const newUser: User = user == undefined
+                    ? new User("no initialize user", -1) : user
+
+                this.updateState((current) => {
+                    current.user = newUser
+                    return current
+                })
+            },
+            (reason) => {
+                this.updateState((current) => {
+                    current.errorMessage = reason.toString()
+                    return current
+                })
+            }
+        )
+    }
 
     setUserData() {
         // Show loading...
@@ -30,30 +52,6 @@ export class HomePresenter extends BasePresenter<HomeState> {
     initState(): HomeState {
         return new HomeState();
     }
-
-    // constructor(
-    //     @inject(GetUserUseCase) private getUserUseCase: GetUserUseCase,
-    //     @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
-    // ) {
-    //     super()
-    //     getUserUseCase.invoke().then(
-    //         (user: User) => {
-    //             const newUser: User = user == undefined
-    //                 ? new User("no initialize user", -1) : user
-    //
-    //             super.updateState((current) => {
-    //                 current.user = newUser
-    //                 return current
-    //             })
-    //         },
-    //         (reason) => {
-    //             super.updateState((current) => {
-    //                 current.errorMessage = reason.toString()
-    //                 return current
-    //             })
-    //         }
-    //     )
-    // }
 }
 
 export class HomeState implements ViewState {

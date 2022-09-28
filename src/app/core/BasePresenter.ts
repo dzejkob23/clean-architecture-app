@@ -1,6 +1,5 @@
 import {ViewState} from "./ViewState";
 import {BehaviorSubject} from "rxjs";
-import {HomeState} from "../feature/Home/homePresenter";
 
 /**
  * Requires and sets basic methods and variables for each presenter class.
@@ -8,16 +7,19 @@ import {HomeState} from "../feature/Home/homePresenter";
 export abstract class BasePresenter<State extends ViewState> {
 
     // Observable object that remembers the last emitted value.
-    readonly state$ = new BehaviorSubject<HomeState>(this.initState())
+    private readonly state$ = new BehaviorSubject<State>(this.initState())
 
-    // Define default UI state
-    abstract initState(): HomeState
+    // Defines default UI state
+    abstract initState(): State
 
-    // Provide current view state
+    // Provides observable object as read only (emitting values from a UI is not allowed)
+    observableState$ = () => this.state$.asObservable()
+
+    // Provides current view state
     protected currentState = () => this.state$.value
 
-    // Update view state
-    protected updateState(update: (currentState: HomeState) => HomeState) {
+    // Updates view state
+    protected updateState(update: (currentState: State) => State) {
         this.state$.next(update(this.currentState()))
     }
 }
