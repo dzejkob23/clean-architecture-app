@@ -1,1 +1,2 @@
-interface ViewState {}
+export interface ViewState {
+}

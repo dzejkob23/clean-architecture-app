@@ -1,25 +1,35 @@
 import {Button, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
-import {HomePresenter} from "./homePresenter";
+import {HomePresenter, HomeState} from "./homePresenter";
 import {container} from "tsyringe";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const HomeScreen = ({navigation}) => {
-    // Init presenter
-    const [presenter] = useState(container.resolve(HomePresenter))
-    const [viewState] = useState(presenter.state)
+
+    // Define presenter & view state
+    const [presenter] = useState<HomePresenter>(container.resolve(HomePresenter))
+    const [viewState, setViewState] = useState<HomeState>()
+
+    // Use "useEffect" to subscribe ViewState from the presenter
+    useEffect(() => {
+        const sub = presenter.state$.subscribe({
+            next: (newState: HomeState) => setViewState(newState)
+        })
+        return () => sub.unsubscribe()
+    }, [])
+
     // Define UI
     return (
         <View>
             <StatusBar style="auto"/>
             <Text>Hello Home!</Text>
-            <Text>User: {viewState.user.name}</Text>
-            <Text>Loading: {viewState.loading}</Text>
-            <Text>Error: {viewState.errorMessage}</Text>
+            <Text>User: {viewState?.user?.name}</Text>
+            <Text>Loading: {viewState?.loading}</Text>
+            <Text>Error: {viewState?.errorMessage}</Text>
             <Text/>
             <Button
                 title="Change user data..."
-                onPress={presenter.setUserData}
+                onPress={() => presenter.setUserData()}
             />
             <Text/>
             <Button

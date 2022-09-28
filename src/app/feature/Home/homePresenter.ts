@@ -1,48 +1,67 @@
-import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
 import {User} from "../../../model/User";
-import {autoInjectable, inject} from "tsyringe";
-import {SetUserUseCase} from "../../../domain/feature/user/use_case/SetUserUseCase";
+import {autoInjectable} from "tsyringe";
 import {BasePresenter} from "../../core/BasePresenter";
+import {ViewState} from "../../core/ViewState";
+import {BehaviorSubject} from "rxjs";
 
 @autoInjectable()
-export class HomePresenter extends BasePresenter<HomePresenter.State> {
+export class HomePresenter extends BasePresenter<HomeState> {
 
-    // this state should be observed by UI layer
-    state: HomePresenter.State = new HomePresenter.State()
+    // Observable object that remembers the last emitted value.
+    readonly state$ = new BehaviorSubject<HomeState>(this.initState())
 
-    constructor(
-        @inject(GetUserUseCase) private getUserUseCase: GetUserUseCase,
-        @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
-    ) {
-        super()
-        getUserUseCase.invoke().then(
-            (user: User) => {
-                this.state.user = user == null ? new User("no initialize user", -1) : user
-            },
-            (reason) => {
-                this.state.errorMessage = reason.toString()
-            }
-        )
-    }
+    // constructor() {
+    //     super();
+    // }
 
     setUserData() {
         // Show loading...
-        this.state.loading = true
 
         // Save updated data...
-        let newUser = new User("Josef", 65)
-        let useCaseParams = new SetUserUseCase.Params(newUser)
-        this.setUserUseCase.invoke(useCaseParams)
+        let newState = new HomeState(
+            new User("Karel", -1),
+            false,
+            "still no errors..."
+        )
+        this.state$.next(newState)
 
         // Hide loading...
-        this.state.loading = false
+    }
+
+    // constructor(
+    //     @inject(GetUserUseCase) private getUserUseCase: GetUserUseCase,
+    //     @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
+    // ) {
+    //     super()
+    //     getUserUseCase.invoke().then(
+    //         (user: User) => {
+    //             const newUser: User = user == undefined
+    //                 ? new User("no initialize user", -1) : user
+    //
+    //             super.updateState((current) => {
+    //                 current.user = newUser
+    //                 return current
+    //             })
+    //         },
+    //         (reason) => {
+    //             super.updateState((current) => {
+    //                 current.errorMessage = reason.toString()
+    //                 return current
+    //             })
+    //         }
+    //     )
+    // }
+
+    protected initState(): HomeState {
+        return new HomeState()
     }
 }
 
-export namespace HomePresenter {
-    export class State implements ViewState {
-        user: User = new User("empty", -1)
-        loading: boolean = false
-        errorMessage: string = "no errors"
+export class HomeState implements ViewState {
+    constructor(
+        public user: User = new User("empty", -1),
+        public loading: boolean = false,
+        public errorMessage: string = "no errors"
+    ) {
     }
 }

@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const getLocalUser = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem(storageKey_User)
-        return jsonValue != null ? JSON.parse(jsonValue) : null
+        return jsonValue != null ? JSON.parse(jsonValue) : undefined
     } catch (e) {
         // TODO - add some log command
     }
