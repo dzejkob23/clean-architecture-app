@@ -8,7 +8,7 @@ const HomeScreen = ({navigation}) => {
 
     // Defines presenter & view state
     const [presenter] = useState<HomePresenter>(container.resolve(HomePresenter))
-    const [viewState, setViewState] = useState<HomeState>()
+    const [viewState, setViewState] = useState<HomeState>(presenter.initState)
 
     // Uses "useEffect" to subscribe ViewState from the presenter
     // "Return" part unsubscribe the ViewState when the screen is unmounted
@@ -22,13 +22,18 @@ const HomeScreen = ({navigation}) => {
         <View>
             <StatusBar style="auto"/>
             <Text>Hello Home!</Text>
-            <Text>User: {viewState?.user?.name}</Text>
-            <Text>Loading: {viewState?.loading}</Text>
-            <Text>Error: {viewState?.errorMessage}</Text>
+            <Text>User: {viewState.user.name}</Text>
+            <Text>Loading: {viewState.loading}</Text>
+            <Text>Error: {viewState.errorMessage}</Text>
             <Text/>
             <Button
-                title="Change user data..."
-                onPress={() => presenter.setUserData()}
+                title="Update user from presenter..."
+                onPress={() => presenter.updateUserFromPresenter("Karel IV.", 706)}
+            />
+            <Text/>
+            <Button
+                title="Update user from storage..."
+                onPress={() => presenter.loadDataFromStorage()}
             />
             <Text/>
             <Button

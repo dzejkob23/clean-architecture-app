@@ -1,5 +1,5 @@
 import {ViewState} from "./ViewState";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, observeOn, queueScheduler} from "rxjs";
 
 /**
  * Requires and sets basic methods and variables for each presenter class.
@@ -13,7 +13,7 @@ export abstract class BasePresenter<State extends ViewState> {
     abstract initState(): State
 
     // Provides observable object as read only (emitting values from a UI is not allowed)
-    observableState$ = () => this.state$.asObservable()
+    observableState$ = () => this.state$.pipe(observeOn(queueScheduler))
 
     // Provides current view state
     protected currentState = () => this.state$.value

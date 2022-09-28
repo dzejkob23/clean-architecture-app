@@ -13,7 +13,25 @@ export class HomePresenter extends BasePresenter<HomeState> {
         @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
     ) {
         super()
-        getUserUseCase.invoke().then(
+    }
+
+    // TODO: Just for testing...
+    updateUserFromPresenter(name: string, age: number) {
+        // Updates data...
+        const newState = new HomeState(
+            new User(name, age),
+            false,
+            ""
+        )
+        // Provides new data on the UI...
+        this.updateState(() => {
+            return newState
+        })
+    }
+
+    // TODO: Just for testing...
+    loadDataFromStorage() {
+        this.getUserUseCase.invoke().then(
             (user: User) => {
                 const newUser: User = user == undefined
                     ? new User("no initialize user", -1) : user
@@ -30,19 +48,6 @@ export class HomePresenter extends BasePresenter<HomeState> {
                 })
             }
         )
-    }
-
-    setUserData() {
-        // Updates data...
-        const newState = new HomeState(
-            new User("Karel II.", -1),
-            false,
-            "still no errors..."
-        )
-        // Provides new data on the UI...
-        this.updateState(() => {
-            return newState
-        })
     }
 
     initState(): HomeState {
