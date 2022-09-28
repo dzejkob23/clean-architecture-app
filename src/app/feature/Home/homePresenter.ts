@@ -33,20 +33,16 @@ export class HomePresenter extends BasePresenter<HomeState> {
     }
 
     setUserData() {
-        // Show loading...
-
-        // Save updated data...
+        // Updates data...
         const newState = new HomeState(
             new User("Karel II.", -1),
             false,
             "still no errors..."
         )
-
+        // Provides new data on the UI...
         this.updateState(() => {
             return newState
         })
-
-        // Hide loading...
     }
 
     initState(): HomeState {
