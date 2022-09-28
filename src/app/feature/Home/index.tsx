@@ -11,10 +11,9 @@ const HomeScreen = ({navigation}) => {
     const [viewState, setViewState] = useState<HomeState>()
 
     // Use "useEffect" to subscribe ViewState from the presenter
+    // "Return" part unsubscribe the ViewState when the screen is unmounted
     useEffect(() => {
-        const sub = presenter.state$.subscribe({
-            next: (newState: HomeState) => setViewState(newState)
-        })
+        const sub = presenter.state$.subscribe(setViewState)
         return () => sub.unsubscribe()
     }, [])
 

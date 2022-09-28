@@ -1,14 +1,10 @@
 import {User} from "../../../model/User";
 import {autoInjectable} from "tsyringe";
-import {BasePresenter} from "../../core/BasePresenter";
 import {ViewState} from "../../core/ViewState";
-import {BehaviorSubject} from "rxjs";
+import {BasePresenter} from "../../core/BasePresenter";
 
 @autoInjectable()
 export class HomePresenter extends BasePresenter<HomeState> {
-
-    // Observable object that remembers the last emitted value.
-    readonly state$ = new BehaviorSubject<HomeState>(this.initState())
 
     // constructor() {
     //     super();
@@ -18,14 +14,21 @@ export class HomePresenter extends BasePresenter<HomeState> {
         // Show loading...
 
         // Save updated data...
-        let newState = new HomeState(
-            new User("Karel", -1),
+        const newState = new HomeState(
+            new User("Karel II.", -1),
             false,
             "still no errors..."
         )
-        this.state$.next(newState)
+
+        this.updateState(() => {
+            return newState
+        })
 
         // Hide loading...
+    }
+
+    initState(): HomeState {
+        return new HomeState();
     }
 
     // constructor(
@@ -51,10 +54,6 @@ export class HomePresenter extends BasePresenter<HomeState> {
     //         }
     //     )
     // }
-
-    protected initState(): HomeState {
-        return new HomeState()
-    }
 }
 
 export class HomeState implements ViewState {
