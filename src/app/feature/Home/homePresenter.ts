@@ -37,16 +37,14 @@ export class HomePresenter extends BasePresenter<HomeState> {
                     ? new User("no initialize user", -1) : user
 
                 this.updateState((current) => {
-                    const newState = {...current}
-                    newState.user = newUser
-                    return newState
+                    current.user = newUser
+                    return current
                 })
             },
             (reason) => {
                 this.updateState((current) => {
-                    const newState = {...current}
-                    newState.errorMessage = reason.toString()
-                    return newState
+                    current.errorMessage = reason.toString()
+                    return current
                 })
             }
         )

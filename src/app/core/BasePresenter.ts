@@ -20,6 +20,6 @@ export abstract class BasePresenter<State extends ViewState> {
 
     // Updates view state
     protected updateState(update: (currentState: State) => State) {
-        this.state$.next(update(this.currentState()))
+        this.state$.next(update({...this.currentState()}))
     }
 }
