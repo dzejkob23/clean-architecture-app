@@ -23,26 +23,26 @@ const HomeScreen = ({navigation}) => {
             <StatusBar style="auto"/>
             <Text>Hello Home!</Text>
             <Text>User: {viewState.user.name}</Text>
-            <Text>Loading: {viewState.loading}</Text>
-            <Text>Error: {viewState.errorMessage}</Text>
+            <Text>Loading: {viewState.loading ? "✅" : "❌"}</Text>
+            <Text>Error: {viewState.errorMessage.length > 0 ? viewState.errorMessage : "❌"}</Text>
             <Text/>
             <Button
-                title="Update from presenter..."
+                title="Show ... Karel IV."
                 onPress={() => presenter.updateUserFromPresenter("Karel IV.", 706)}
             />
             <Text/>
             <Button
-                title="Update from storage (observable)..."
+                title="Show ... Přemysl Otakar II."
+                onPress={() => presenter.updateUserFromPresenter("Přemysl Otakar II.", 744)}
+            />
+            <Text/>
+            <Button
+                title="Get stored user"
                 onPress={() => presenter.loadDataFromStorage()}
             />
             <Text/>
             <Button
-                title="Update from storage (promise)..."
-                onPress={() => presenter.loadDataFromStorageAsync()}
-            />
-            <Text/>
-            <Button
-                title="Save current user..."
+                title="Save current user"
                 onPress={() => presenter.saveUserData()}
             />
             <Text/>
