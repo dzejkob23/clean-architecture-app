@@ -13,8 +13,8 @@ export class SetUserUseCase extends UseCase<void, SetUserUseCase.Params> {
         super()
     }
 
-    doWork(params: SetUserUseCase.Params): Promise<void> {
-        return this.userRepository.setUser(params.user)
+    doWork(params: SetUserUseCase.Params): void {
+        this.userRepository.setUser(params.user)
     }
 }
 

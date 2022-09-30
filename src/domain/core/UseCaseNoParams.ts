@@ -8,7 +8,7 @@ export abstract class UseCaseNoParams<OutputType> extends UseCase<OutputType, vo
     /**
      * Executes appropriate implementation of [UseCaseNoParams]
      */
-    async invoke(): Promise<OutputType> {
+    invoke(): OutputType {
         return super.invoke(undefined)
     }
 }

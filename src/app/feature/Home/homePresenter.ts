@@ -4,6 +4,7 @@ import {ViewState} from "../../core/ViewState";
 import {BasePresenter} from "../../core/BasePresenter";
 import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
 import {SetUserUseCase} from "../../../domain/feature/user/use_case/SetUserUseCase";
+import {firstValueFrom} from "rxjs";
 
 @autoInjectable()
 export class HomePresenter extends BasePresenter<HomeState> {
@@ -15,7 +16,6 @@ export class HomePresenter extends BasePresenter<HomeState> {
         super()
     }
 
-    // TODO: Just for testing...
     updateUserFromPresenter(name: string, age: number) {
         // Updates data...
         const newState = new HomeState(
@@ -29,25 +29,30 @@ export class HomePresenter extends BasePresenter<HomeState> {
         })
     }
 
-    // TODO: Just for testing...
     loadDataFromStorage() {
-        this.getUserUseCase.invoke().then(
-            (user: User) => {
-                const newUser: User = user == undefined
-                    ? new User("no initialize user", -1) : user
+        this.getUserUseCase.invoke().subscribe((loadedUserValue) => {
 
-                this.updateState((current) => {
-                    current.user = newUser
-                    return current
-                })
-            },
-            (reason) => {
-                this.updateState((current) => {
-                    current.errorMessage = reason.toString()
-                    return current
-                })
-            }
-        )
+            const newUserValue: User = loadedUserValue == undefined ? new User("Alžběta II.", -1) : loadedUserValue
+
+            this.updateState((current) => {
+                current.user = newUserValue
+                return current
+            })
+        })
+    }
+
+    async loadDataFromStorageAsync() {
+        const loadedUser: User = await firstValueFrom(this.getUserUseCase.invoke())
+        const newUser: User = loadedUser == undefined ? new User("Ludvík XVII.", -1) : loadedUser
+
+        this.updateState((current) => {
+            current.user = newUser
+            return current
+        })
+    }
+
+    saveUserData() {
+        this.setUserUseCase.invoke(new SetUserUseCase.Params(this.currentState().user))
     }
 
     initState(): HomeState {

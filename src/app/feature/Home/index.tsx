@@ -32,8 +32,18 @@ const HomeScreen = ({navigation}) => {
             />
             <Text/>
             <Button
-                title="Update from storage..."
+                title="Update from storage (observable)..."
                 onPress={() => presenter.loadDataFromStorage()}
+            />
+            <Text/>
+            <Button
+                title="Update from storage (promise)..."
+                onPress={() => presenter.loadDataFromStorageAsync()}
+            />
+            <Text/>
+            <Button
+                title="Save current user..."
+                onPress={() => presenter.saveUserData()}
             />
             <Text/>
             <Button
