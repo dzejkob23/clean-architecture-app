@@ -2,17 +2,20 @@ import {User} from "../../../model/User";
 import {autoInjectable, inject} from "tsyringe";
 import {ViewState} from "../../core/ViewState";
 import {BasePresenter} from "../../core/BasePresenter";
-import {GetUserUseCase} from "../../../domain/feature/user/use_case/GetUserUseCase";
+import {GetUserLocallyUseCase} from "../../../domain/feature/user/use_case/GetUserLocallyUseCase";
 import {SetUserUseCase} from "../../../domain/feature/user/use_case/SetUserUseCase";
+import {GetUserFromCloudUseCase} from "../../../domain/feature/user/use_case/GetUserFromCloudUseCase";
 
 @autoInjectable()
 export class HomePresenter extends BasePresenter<HomeState> {
 
     constructor(
-        @inject(GetUserUseCase) private getUserUseCase: GetUserUseCase,
-        @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase
+        @inject(GetUserLocallyUseCase) private getUserLocallyUseCase: GetUserLocallyUseCase,
+        @inject(SetUserUseCase) private setUserUseCase: SetUserUseCase,
+        @inject(GetUserFromCloudUseCase) private getUserFromCloudUseCase: GetUserFromCloudUseCase
     ) {
         super()
+        getUserFromCloudUseCase.invoke() // fixme: just for testing right now
     }
 
     updateUserFromPresenter(name: string, age: number) {
@@ -29,7 +32,7 @@ export class HomePresenter extends BasePresenter<HomeState> {
     }
 
     loadDataFromStorage() {
-        this.getUserUseCase.invoke().subscribe((loadedUserValue) => {
+        this.getUserLocallyUseCase.invoke().subscribe((loadedUserValue) => {
 
             const newUserValue: User = loadedUserValue == undefined ? new User("Nobody", -1) : loadedUserValue
 
@@ -50,6 +53,15 @@ export class HomePresenter extends BasePresenter<HomeState> {
     //         return current
     //     })
     // }
+
+    loadDataFromCloud() {
+        this.getUserFromCloudUseCase.invoke().subscribe((loadedUserValue) => {
+            this.updateState((current) => {
+                current.user = loadedUserValue
+                return current
+            })
+        })
+    }
 
     saveUserData() {
 

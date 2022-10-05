@@ -8,14 +8,18 @@ import {Observable} from "rxjs";
 export interface UserRepository {
 
     /**
-     * Returns data about user.
+     * Returns data about local user.
      */
-    getUser: () => Observable<User>
+    getUserLocally: () => Observable<User>
 
     /**
      * Stores data about user.
      * @param user data about user
      */
-    setUser: (user: User) => void
+    setUserLocally: (user: User) => void
 
+    /**
+     * Returns data about user from cloud.
+     */
+    getUserFromCloud: (userId: string) => Observable<User>
 }

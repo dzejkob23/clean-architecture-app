@@ -5,17 +5,16 @@ import {inject, injectable} from "tsyringe";
 import {Observable} from "rxjs";
 
 /**
- * Returns user data. UseCase does not care where the data is from.
- * It simply calls a repository interface only.
+ * Returns local user data.
  */
 @injectable()
-export class GetUserUseCase extends UseCaseNoParams<Observable<User>> {
+export class GetUserLocallyUseCase extends UseCaseNoParams<Observable<User>> {
 
     constructor(@inject("UserRepository") private userRepository: UserRepository) {
         super()
     }
 
     doWork(params: void): Observable<User> {
-        return this.userRepository.getUser()
+        return this.userRepository.getUserLocally()
     }
 }

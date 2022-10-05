@@ -42,6 +42,11 @@ const HomeScreen = ({navigation}) => {
             />
             <Text/>
             <Button
+                title="Get cloud user"
+                onPress={() => presenter.loadDataFromCloud()}
+            />
+            <Text/>
+            <Button
                 title="Save current user"
                 onPress={() => presenter.saveUserData()}
             />

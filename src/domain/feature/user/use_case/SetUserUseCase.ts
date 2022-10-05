@@ -14,7 +14,7 @@ export class SetUserUseCase extends UseCase<void, SetUserUseCase.Params> {
     }
 
     doWork(params: SetUserUseCase.Params): void {
-        this.userRepository.setUser(params.user)
+        this.userRepository.setUserLocally(params.user)
     }
 }
 
