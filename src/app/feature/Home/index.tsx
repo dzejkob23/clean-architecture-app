@@ -27,16 +27,6 @@ const HomeScreen = ({navigation}) => {
             <Text>Error: {viewState.errorMessage.length > 0 ? viewState.errorMessage : "❌"}</Text>
             <Text/>
             <Button
-                title="Show ... Karel IV."
-                onPress={() => presenter.updateUserFromPresenter("Karel IV.", 706)}
-            />
-            <Text/>
-            <Button
-                title="Show ... Přemysl Otakar II."
-                onPress={() => presenter.updateUserFromPresenter("Přemysl Otakar II.", 744)}
-            />
-            <Text/>
-            <Button
                 title="Get stored user"
                 onPress={() => presenter.loadDataFromStorage()}
             />

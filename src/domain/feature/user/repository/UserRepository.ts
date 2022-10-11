@@ -21,5 +21,10 @@ export interface UserRepository {
     /**
      * Returns data about user from cloud.
      */
-    getUserFromCloud: (userId: string) => Observable<User>
+    getUserFromCloudOrCache: (userId: string) => Observable<User>
+
+    /**
+     * Sets new user into the local cache.
+     */
+    setUserIntoCache: (userId: string, firstName: string, lastName: string) => void
 }

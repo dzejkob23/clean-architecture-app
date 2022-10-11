@@ -1,10 +1,22 @@
-import {autoInjectable} from "tsyringe";
+import {autoInjectable, inject} from "tsyringe";
 import {BasePresenter} from "../../core/BasePresenter";
 import {ViewState} from "../../core/ViewState";
 import {User} from "../../../model/User";
+import {SetUserInCloudCacheUserCase} from "../../../domain/feature/user/use_case/SetUserInCloudCacheUserCase";
 
 @autoInjectable()
 export class ProfilePresenter extends BasePresenter<ProfileState> {
+
+    constructor(
+        @inject(SetUserInCloudCacheUserCase) private setUserInCloudCacheUserCase: SetUserInCloudCacheUserCase
+    ) {
+        super()
+        setUserInCloudCacheUserCase.invoke(
+            new SetUserInCloudCacheUserCase.Params(
+        "1", "Jaja", "Paja"
+            )
+        )
+    }
 
     initState(): ProfileState {
         return new ProfileState();

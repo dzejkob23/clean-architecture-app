@@ -15,20 +15,6 @@ export class HomePresenter extends BasePresenter<HomeState> {
         @inject(GetUserFromCloudUseCase) private getUserFromCloudUseCase: GetUserFromCloudUseCase
     ) {
         super()
-        getUserFromCloudUseCase.invoke() // fixme: just for testing right now
-    }
-
-    updateUserFromPresenter(name: string, age: number) {
-        // Updates data...
-        const newState = new HomeState(
-            new User(name, age),
-            false,
-            ""
-        )
-        // Provides new data on the UI...
-        this.updateState(() => {
-            return newState
-        })
     }
 
     loadDataFromStorage() {
@@ -55,7 +41,9 @@ export class HomePresenter extends BasePresenter<HomeState> {
     // }
 
     loadDataFromCloud() {
-        this.getUserFromCloudUseCase.invoke().subscribe((loadedUserValue) => {
+        this.getUserFromCloudUseCase.invoke(
+            new GetUserFromCloudUseCase.Params("1")
+        ).subscribe((loadedUserValue) => {
             this.updateState((current) => {
                 current.user = loadedUserValue
                 return current
