@@ -33,7 +33,7 @@ const HomeScreen = ({navigation}) => {
             <Text/>
             <Button
                 title="Get cloud user"
-                onPress={() => presenter.loadDataFromCloud()}
+                onPress={() => presenter.loadDataFromCloud("1")}
             />
             <Text/>
             <Button
